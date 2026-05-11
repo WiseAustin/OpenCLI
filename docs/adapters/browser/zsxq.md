@@ -13,6 +13,7 @@ Read groups, topics, search results, dynamics, and single-topic details from [�
 | `opencli zsxq topic <id>` | Fetch a single topic with comments |
 | `opencli zsxq search <keyword>` | Search topics inside a group |
 | `opencli zsxq dynamics` | List recent dynamics across groups |
+| `opencli zsxq footprint <author>` | Collect a member's posts and replies in one group |
 
 ## Usage Examples
 
@@ -34,6 +35,9 @@ opencli zsxq topic 987654321 --comment_limit 20
 
 # Read recent dynamics across all joined groups
 opencli zsxq dynamics --limit 20
+
+# Collect one member's footprint in a specific group
+opencli zsxq footprint "反诈先锋" --group_id 88512145458842
 ```
 
 ## Prerequisites
@@ -47,3 +51,5 @@ opencli zsxq dynamics --limit 20
 - If there is no active group context, pass `--group_id <id>` or open the target group in Chrome first
 - `zsxq groups` returns `group_id`, which you can reuse with `--group_id`
 - `zsxq topic` surfaces a missing topic as `NOT_FOUND` instead of a generic fetch error
+- `zsxq footprint` should be run from the target group page or with `--group_id <id>`; it scans topic history in that group and filters matching posts and comment replies by display name
+- For larger histories, keep `--page_size` and `--comment_page_size` at modest values; the adapter paginates with `begin_time` to stay aligned with the live group page

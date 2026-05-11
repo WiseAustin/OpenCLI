@@ -17,6 +17,8 @@ docs/.vitepress/cache
 *.crx
 *.zip
 .envrc
+.env
+exports/
 .windsurf
 .claude
 .cortex

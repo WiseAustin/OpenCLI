@@ -28201,6 +28201,77 @@
   },
   {
     "site": "zsxq",
+    "name": "footprint",
+    "description": "抓取指定成员在星球内的发言、回复、文章和文件元信息",
+    "access": "read",
+    "domain": "wx.zsxq.com",
+    "strategy": "cookie",
+    "browser": true,
+    "args": [
+      {
+        "name": "author",
+        "type": "str",
+        "required": true,
+        "positional": true,
+        "help": "Display name to match, e.g. 反诈先锋"
+      },
+      {
+        "name": "group_id",
+        "type": "str",
+        "required": false,
+        "help": "Group ID (optional; defaults to the active group in Chrome)"
+      },
+      {
+        "name": "limit",
+        "type": "int",
+        "default": 0,
+        "required": false,
+        "help": "Max rows to return (0 = unlimited)"
+      },
+      {
+        "name": "page_size",
+        "type": "int",
+        "default": 20,
+        "required": false,
+        "help": "Topics per page when paging history"
+      },
+      {
+        "name": "comment_page_size",
+        "type": "int",
+        "default": 20,
+        "required": false,
+        "help": "Comments per page when scanning replies"
+      },
+      {
+        "name": "output",
+        "type": "str",
+        "default": "./exports",
+        "required": false,
+        "help": "Root directory for exported crawl data"
+      }
+    ],
+    "columns": [
+      "kind",
+      "type",
+      "topic_id",
+      "group",
+      "author",
+      "reply_to",
+      "title",
+      "content",
+      "attachments",
+      "comments",
+      "likes",
+      "time",
+      "url"
+    ],
+    "type": "js",
+    "modulePath": "zsxq/footprint.js",
+    "sourceFile": "zsxq/footprint.js",
+    "navigateBefore": "https://wx.zsxq.com"
+  },
+  {
+    "site": "zsxq",
     "name": "groups",
     "description": "列出当前账号加入的星球",
     "access": "read",

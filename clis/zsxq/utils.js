@@ -1,4 +1,4 @@
-import { ArgumentError, AuthRequiredError, CliError } from '@jackwener/opencli/errors';
+import { ArgumentError, AuthRequiredError, CliError } from '../../dist/src/errors.js';
 const SITE_DOMAIN = 'wx.zsxq.com';
 const SITE_URL = 'https://wx.zsxq.com';
 function asRecord(value) {
@@ -14,8 +14,11 @@ function pickArray(...values) {
     }
     return [];
 }
-export async function ensureZsxqPage(page) {
-    await page.goto(SITE_URL);
+export async function ensureZsxqPage(page, groupId = '') {
+    const targetUrl = groupId
+        ? `${SITE_URL}/group/${String(groupId)}`
+        : SITE_URL;
+    await page.goto(targetUrl);
 }
 export async function ensureZsxqAuth(page) {
     // zsxq uses httpOnly cookies that may be on different subdomains.
@@ -29,6 +32,7 @@ export async function ensureZsxqAuth(page) {
             xhr.open('GET', 'https://api.zsxq.com/v2/groups', true);
             xhr.withCredentials = true;
             xhr.setRequestHeader('accept', 'application/json');
+            xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
             xhr.onload = () => {
               if (xhr.status >= 200 && xhr.status < 300) {
                 try { resolve(JSON.parse(xhr.responseText)); }
@@ -84,6 +88,7 @@ export async function browserJsonRequest(page, path) {
           xhr.open('GET', path, true);
           xhr.withCredentials = true;
           xhr.setRequestHeader('accept', 'application/json, text/plain, */*');
+          xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
           xhr.onload = () => {
             let parsed = null;
             if (xhr.responseText) {
